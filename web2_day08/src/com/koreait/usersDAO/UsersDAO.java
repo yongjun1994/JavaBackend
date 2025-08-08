@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.koreait.usersDTO.UsersDTO;
 
@@ -108,6 +110,36 @@ public class UsersDAO {
 
 	// 전체조회(selectAll)
 	// List<UserDTO> 객체명 = new ArrayList<>();
+
+	// 전체조회(selectAll)
+	// List<UserDTO> 객체명 = new ArrayList<>();
+	public List<UsersDTO> selectAll() {
+		List<UsersDTO> userList = new ArrayList<>();
+		String query = "SELECT * FROM TBL_USERS";
+
+		try {
+			connection = DBConnector.getConnection();
+			preparedStatement = connection.prepareStatement(query);
+			resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				UsersDTO user = new UsersDTO();
+				user.setUsersNumber(resultSet.getInt("USERS_NUMBER"));
+				user.setUsersId(resultSet.getString("USERS_ID"));
+				user.setUsersPw(resultSet.getString("USERS_PW"));
+				user.setUsersName(resultSet.getString("USERS_NAME"));
+				user.setUsersEmail(resultSet.getString("USERS_EMAIL"));
+				userList.add(user);
+			}
+		} catch (SQLException e) {
+			System.out.println("selectAll() SQL 오류!!");
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+		return userList;
+	}
 
 	// 공통 연결 종료 처리(close 메소드)
 	private void close() {

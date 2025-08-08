@@ -1,5 +1,7 @@
 package com.koreait.test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.koreait.usersDAO.UsersDAO;
@@ -83,6 +85,14 @@ public class Test {
 //         System.out.println(id + "는 사용 가능한 아이디입니다");
 //      }
 //      
+		// 전체 회원 출력
+		List<UsersDTO> users = new ArrayList();
+		users = usersDAO.selectAll();
+		System.out.println(users);
+		System.out.println("====[전체 회원 조회]====");
+		for (UsersDTO user : users) {
+			System.out.println(user);
+		}
 
 	}
 }
